@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="us" ng-app="DutyRankReloaded" ng-controller="mainCtrl as main">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="country" content="Cuba"/>
+    <meta name="author" content="Raudel Giráldez Reyes"/>
+    <title ng-bind="main.title"></title>
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/vendor/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+</head>
+<body id="top">
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-sm-3 bgGray" style="height: 46px;"></div>
+        <div class="col-sm-6 bgGray vcenter" style="height: 46px">
+            <p class="text text-center text-gray" style="width: 100%">DutyRank: TechnoMW3 Ranking
+                <small class="text text-center text-gray" style="font-size: 0.7em"
+                       ng-bind="main.theMatrix.last_update"></small>
+            </p>
+        </div>
+        <div class="col-sm-3 bgGray" style="height: 46px; text-align: right; float: right">
+            <ul class="nav navbar-nav pull-right" style="margin-top: 5px;">
+                <li><a href="#" ng-click="main.viewInstall = !main.viewInstall">Install</a></li>
+                <li><a href="#" ng-click="main.viewImport = !main.viewImport">Import</a></li>
+                <li><a href="#" ng-click="main.viewCredits = !main.viewCredits">Credits</a></li>
+                <li><a href="#" ng-click="main.viewLicense = !main.viewLicense">License</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--div para normalizar el scroll-->
+    <div class="row">
+        <div class="vSpace" style="display: none"
+             ng-style="main.scrollPos >= main.bannerHeight ? {'display':'block'} : {'display':'none'}"></div>
+    </div>
+    <!--Menú que se muestra al inicio-->
+    <div class="row" ng-class="main.scrollPos >= main.bannerHeight ? 'menu':''">
+        <div class="vcenter" ng-class="main.scrollPos >= main.bannerHeight ? 'shadow':''">
+            <div class="col-sm-3 col-xs-3">
+                <img src="img/DutyRankReloaded.png" class="col-sm-12 col-xs-12" style="margin-bottom: 5px"
+                     ng-class="main.scrollPos >= 46 ? 'img-logo col-sm-8 col-sm-8':''"/>
+            </div>
+            <div class="col-sm-9 col-xs-9">
+                <ul class="nav navbar-nav pull-right">
+                    <li scroll-to="top"
+                        ng-style="main.scrollPos > main.bannerHeight ? {'display':'block'} : {'display':'none'}"
+                        style="display: none"><a href="#">Home</a></li>
+                    <li scroll-to="main"><a href="#">Main</a></li>
+                    <li scroll-to="cool"><a href="#">Cool</a></li>
+                    <li scroll-to="games"><a href="#">Games</a></li>
+                    <li scroll-to="others"><a href="#">Others</a></li>
+                    <li scroll-to="explosives"><a href="#">Explosives</a></li>
+                    <li scroll-to="granades"><a href="#">Granades</a></li>
+                    <li scroll-to="rockets"><a href="#">Rockets</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="progress-bar progress-bar-info menuBar" style="width: {{main.perCenScroll}}%"></div>
+    </div>
+</div>
+<div class="floatWindow col-sm-4" ng-show="main.viewLicense"
+     style="left: {{main.leftMargingWindow + 'px'}}; z-index: 1000;">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="text-muted" style="margin-top: 0;margin-bottom: 0;">DutyRank License</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 text-justify">
+                    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+                        <object data="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" type="image/jpg">
+                            <img alt="Licencia Creative Commons" style="border-width:0" src="img/by-nc-nd.eu_petit.png"/>
+                        </object>
+                    </a><br/>
+                    <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">DutyRank</span> por <span
+                        xmlns:cc="http://creativecommons.org/ns#"
+                        property="cc:attributionName">Raudel Giráldez Reyes</span> se distribuye bajo una <a
+                        rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licencia Creative Commons
+                    Atribución-NoComercial-SinDerivar 4.0 Internacional</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="floatWindow col-sm-3" ng-show="main.viewCredits"
+     style="left: {{main.leftMargingWindow + 'px'}}; z-index: 1000;">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="text-muted" style="margin-top: 0;margin-bottom: 0;">DutyRank Credits</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4"><img ng-src="img/giraldez.jpg" class="img-responsive img-rounded"/></div>
+                <div class="col-sm-8">
+                    <strong><span>MSc.</span> <span>Raudel Giráldez Reyes</span></strong>
+                    <br><span>Pinar del Río, Cuba</span>
+                    <br><span><a href="http://www.facebook.com/raudel.giraldez" target="_blank">Facebook</a></span>
+                    <br><a href="mailto:raudel.giraldez@gmail.com">raudel.giraldez@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-warning col-sm-4 floatWindow" ng-show="main.viewInstall"
+     style="left: {{main.leftMargingWindow + 'px'}}; z-index: 1000;">
+    <button type="button" class="close" ng-click="main.viewInstall = false">&times;</button>
+    <h4 class="text-center">DutyRank Install</h4>
+    <form name="main.frmInstall" ng-submit="main.install(main.frmInstall.$valid)" novalidate="novalidate">
+        <div class="row">
+            <div class="form-group col-sm-12 text-center"
+                 ng-class="{'has-error': main.frmInstall.pass.$invalid && main.frmInstall.pass.$dirty}">
+                <label for="passInstall">Password:</label>
+                <input id="passInstall" type="password" class="form-control" name="pass" placeholder="password"
+                       ng-model="main.frmInstall.password" autocomplete="off" ng-minlength="3"
+                       ng-maxlength="20" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="text-center">
+                    <small class="text-danger">{{main.msgInstall}}</small>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="form-control">Install</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="alert alert-warning col-sm-4 floatWindow" ng-show="main.viewImport"
+     style="left: {{main.leftMargingWindow + 'px'}}; z-index: 1000;">
+    <button type="button" class="close" ng-click="main.viewImport = false">&times;</button>
+    <h4 class="text-center">DutyRank Import</h4>
+    <form name="main.frmImport" ng-submit="main.import(main.frmImport.$valid)" novalidate="novalidate">
+        <div class="row">
+            <div class="form-group col-sm-12 text-center"
+                 ng-class="{'has-error': main.frmImport.pass.$invalid && main.frmImport.pass.$dirty}">
+                <label for="passImport">Password:</label>
+                <input id="passImport" type="password" class="form-control" name="pass" placeholder="password"
+                       ng-model="main.frmImport.password" autocomplete="off" ng-minlength="3"
+                       ng-maxlength="20" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="text-center">
+                    <small class="text-danger">{{main.msgImport}}</small>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="form-control">Import</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Salón de la fama-->
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Hall of fame
+                <small>(Match with MOAB)</small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4" ng-repeat="(key, value) in main.theMatrix.kill_moab_game">
+            <div class="alert alert-warning">
+                <span ng-bind="key"></span>
+                <span class="badge pull-right" ng-bind="value"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Principal-->
+<div class="container" id="main">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Main Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">Kills</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Deaths</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.death">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Ratio
+                    <small>Kills / Deaths</small>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.ratio">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Elo</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.elo">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Interesante-->
+<div class="container" id="cool">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Cool Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">First blood</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.first_blood">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">First death</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.first_death">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Major kills in one game</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.majorKillOneGame">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Major Racha</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.racha_aux">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Juegos-->
+<div class="container" id="games">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Games Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">Play games</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.play_games">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Wins Games</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.match_win">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Ratio
+                    <small>Wins Games / Play games</small>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.ratio_match_wins">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Kills AVG per game</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_avg">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Otros-->
+<div class="container" id="others">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Others Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">Head kill</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_head">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Suicide</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_suicida">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Throwing knife kill</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_knife">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">MOAB's kills</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_nuke">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Explosivos-->
+<div class="container" id="explosives">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Explosives Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">toy/car bomb</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_bombCar">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Bouncing betty</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_bouncingbetty">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Claymore</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_claymore">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">C4</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_c4">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Granadas-->
+<div class="container" id="granades">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Granades Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">Frag granade</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_grenade">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Semtex</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_semtex">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Concussion granade</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_concussion">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Lanzamisiles-->
+<div class="container" id="rockets">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="text-gray">Rockets Ranking</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">Smaw</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_smaw">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">RPG</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_rpg">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Stinger</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(key, value) in main.theMatrix.kill_stinger">
+                            <span ng-bind="$index+1"></span>
+                            <span ng-bind="key"></span>
+                            <span class="badge" ng-bind="value"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer -->
+<div class="container-fluid">
+    <footer>
+        <div class="row bgGray vcenter" style="padding-bottom: 5px;">
+            <div class="col-sm-6 col-sm-offset-3 text text-center text-gray">
+                <a href="https://github.com/Giraldez/Dutyrank">DutyRank Reloaded</a><br/>
+                Raudel Giráldez Reyes <br/>
+                Pinar del Río, Cuba - 2016
+            </div>
+            <div class="col-sm-2">
+                <img id="imgFooter" src="img/DutyRankReloaded.png" class="img-responsive"/>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="js/vendor/angular.js"></script>
+<script src="js/vendor/ng-scrollto.js"></script>
+<script src="js/app.js"></script>
+<script src="js/main.ctrl.js"></script>
+<script src="js/dataSvc.js"></script>
+</body>
+</html>

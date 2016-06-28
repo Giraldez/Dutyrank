@@ -1,0 +1,55 @@
+body{
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+.bgGray{
+    background-color: #e2e2e2;
+    /*background-color: #f2f2f2;*/
+}
+.vSpace{
+    height: 89px;
+}
+.vcenter{
+    display: flex;
+    align-items: center;
+}
+.floatWindow{
+    position: fixed;
+    top:50px;
+}
+.text-gray{
+    color: #626262;
+}
+.menu{
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    opacity: 0.9;
+}
+.menuBar{
+    height: 2px;
+}
+.shadow{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.118);
+}
+.img-logo{
+    animation: aniWidh 0.4s ease;
+}
+.nav > li > a{
+    padding: 5px 10px;
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    border-radius: 10%;
+}
+.list-group-item{
+    padding: 4px 10px;
+}
+@keyframes aniWidh{
+    from {width: 100%}
+    to {width: 66.6666%}
+}
+#imgFooter{
+    filter: grayscale(1);
+}

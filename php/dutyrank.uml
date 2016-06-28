@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\installer</OriginalElement>
+  <nodes>
+    <node x="-491.0" y="-243.0">\logConverter</node>
+    <node x="4.0" y="-249.0">\loader</node>
+    <node x="-158.0" y="-245.0">\installer</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="36.5" y="14.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constants</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
